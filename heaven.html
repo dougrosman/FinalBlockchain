@@ -9,19 +9,27 @@
         body {
             margin: 0;
             overflow: hidden;
+            display: grid;
+            min-height: 100vh;
+            place-items: center;
         }
         #container {
             position: relative;
-            width: 100vw;
-            height: 100vh;
+            overflow: hidden;
+            width: 1403px;
+            height: 1024px;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
             background-size: cover;
+            background-repeat: no-repeat;
             background-position: center;
         }
         /* Background styles for different states */
+        .bg-loading {
+            background-image: url('loading.jpg');
+        }
         .bg-heaven {
             background-image: url('heaven.jpg');
         }
@@ -34,12 +42,23 @@
         .bg-dantesinferno {
             background-image: url('dantesinferno.jpg');
         }
+
+        .animal-container {
+            
+        }
         .animal {
             width: 100px;
             height: auto;
             margin: 10px;
-            position: relative;
+            position: absolute;
         }
+
+        .Butters {
+            bottom: 200px;;
+            right: 50%;
+        }
+
+
         .options {
             position: absolute;
             top: -50px;
@@ -61,10 +80,10 @@
         
         #memorial-sign {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
+            bottom: 1px;
+            left: 2px;
             cursor: pointer;
-            width: 60px;
+            width: 80px;
         }
         #train-ticket {
             position: absolute;
@@ -82,35 +101,60 @@
             transform: translate(-50%, -50%);
             text-align: center;
         }
-        #whistle, #trolley, #end-trolley, #text {
+        #whistle, #end-trolley, #text {
             display: none;
             cursor: pointer;
         }
+
+        .slideInRight {
+            animation: slideRight 3s ease-in-out forwards;
+        }
+
+        .animalToTrolley {
+            animation: moveToTrolley .5s linear forwards;
+        }
+
+        @keyframes slideRight {
+            to {
+                right: 50%;
+            }
+        }
+
+        @keyframes moveToTrolley {
+            to {
+                right: 50%;
+                bottom: 10px;
+            }
+        }
+
+        
     </style>
 </head>
 <body>
     <!-- Dynamic container for backgrounds -->
-    <div id="container" class="bg-heaven">
+    <div id="container" class="bg-loading">
         <!-- Animals will be dynamically added here -->
-    </div>
+        <a href="index.html"><img id="memorial-sign" src="memorialsign.png" alt="Memorial Sign"></a>
 
-    <!-- Memorial sign to navigate back to the memorial page -->
-    <a href="index.html">
-    <img id="memorial-sign" src="memorialsign.png" alt="Memorial Sign"></a>
-
-    <!-- Train ticket button -->
-    <img id="train-ticket" class="animate__animated" src="trainticket.png" alt="Train Ticket">
-
-    <img id="train-ticket" src="trainticket.png" class="animate__animated" alt="Train Ticket" style="display: none; position: absolute; bottom: 20px; left: 100px; width: 60px;">
-
-
-    <!-- End scene container -->
+        <!-- Train ticket button -->
+        <img id="train-ticket" class="animate__animated" src="trainticket.png" alt="Train Ticket">
+         <!-- End scene container -->
     <div id="end-scene">
         <img id="whistle" class="animate__animated" src="whistle.png" alt="Whistle">
         <img id="trolley" class="animate__animated" src="trolly.png" alt="Trolley">
         <img id="end-trolley" class="animate__animated" src="endtrolly.png" alt="End Trolley">
         <img id="text" class="animate__animated" src="text.png" alt="Text">
     </div>
+    </div>
+
+    <!-- Memorial sign to navigate back to the memorial page -->
+    
+    
+
+    <!-- <img id="train-ticket" src="trainticket.png" class="animate__animated" alt="Train Ticket" style="display: none; position: absolute; bottom: 20px; left: 100px; width: 60px;"> -->
+
+
+   
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
     <script src="abi.js"></script>

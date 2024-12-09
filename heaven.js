@@ -87,14 +87,15 @@ function renderAnimal(name) {
     // Create a container for the animal and its options
     const animalContainer = document.createElement("div");
     animalContainer.classList.add("animal-container");
-    animalContainer.style.position = "relative";
-    animalContainer.style.display = "inline-block";
+    //animalContainer.style.position = "absolute";
+    //animalContainer.style.display = "inline-block";
     animalContainer.style.margin = "10px";
 
     // Create the animal image
     const animal = document.createElement("img");
     animal.src = `${name}.png`;
     animal.classList.add("animal");
+    animal.classList.add(`${name}`)
     animal.classList.add("animate__animated")
 
     // Options container
@@ -107,7 +108,7 @@ function renderAnimal(name) {
     options.style.display = "none"; // Initially hidden
     options.style.background = "#fff";
     options.style.border = "1px solid #ccc";
-    options.style.padding = "5px";
+    options.style.padding = "1px";
     options.style.borderRadius = "5px";
     options.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
 
@@ -176,7 +177,8 @@ async function checkTrainEvent() {
         // Check if the train has already departed
         const trainDeparted = await contract.hasTrainDeparted();
 
-        if (allAnimalsRespected && !trainDeparted) {
+        //if (allAnimalsRespected && !trainDeparted) {
+            if (allAnimalsRespected) {
             // Show the train ticket
             const trainTicket = document.getElementById("train-ticket");
             trainTicket.style.display = "block";
@@ -184,49 +186,86 @@ async function checkTrainEvent() {
 
             // Add click event to train ticket
             trainTicket.addEventListener("click", async () => {
-                // Hide the ticket and animate the train arrival
-                trainTicket.style.display = "none";
-                const trolly = document.createElement("img");
-                trolly.src = "trolly.png";
-                trolly.id = "trolly";
-                trolly.style.position = "absolute";
-                trolly.style.right = "-300px"; // Start off-screen
-                trolly.style.bottom = "100px";
-                trolly.style.width = "200px";
-                trolly.classList.add("animate__animated", "animate__slideInRight");
-                document.body.appendChild(trolly);
+                try {
+                    // Trigger the train event in the contract
+                    // const tx = await contract.triggerTrainEvent();
+                    // await tx.wait(); // Wait for the transaction to be mined
 
-                // Add click event to the train
-                trolly.addEventListener("click", async () => {
-                    try {
-                        // Trigger the train event in the contract
-                        const tx = await contract.triggerTrainEvent();
-                        await tx.wait(); // Wait for the transaction to be mined
+                    // Hide the ticket
+                    trainTicket.style.display = "none";
 
-                        // Change train image to departure state
-                        trolly.src = "endtrolly.png";
+                    // Animate the trolly arriving
+                    const trolley = document.createElement("div");
+                    trolley.id = "trolley";
+                    trolley.style.backgroundImage = `url("trolly.png")`;
+                    trolley.style.position = "absolute";
+                    trolley.style.right = "-300px"; // Start off-screen
+                    trolley.style.bottom = "10px";
+                    trolley.style.width = "200px";
+                    trolley.style.height = "200px";
+                    trolley.style.backgroundSize = "contain";
+                    trolley.style.backgroundRepeat = "no-repeat";
+                    trolley.classList.add("slideInRight");
+                    document.getElementById("container").appendChild(trolley);
 
-                        // Animate train departure
+                    // Wait for the trolly to arrive
+                    setTimeout(async () => {
+                        // Animate animals to the trolly one by one
+                        for (const animal of animals) {
+                            const animalDiv = document.querySelector(`.${animal}`);
+                            if (animalDiv) {
+                                animalDiv.classList.add("animalToTrolley");
+                                await new Promise((resolve) => setTimeout(resolve, 250)); // Wait for animation
+                                animalDiv.remove();
+                            }
+                        }
+
+                        // Change trolly image to "end" state
+                        trolley.style.backgroundImage = `url("endtrolly.png")`;
+
+                        // Pause before showing text and whistle
                         setTimeout(() => {
-                            trolly.classList.remove("animate__slideInRight");
-                            trolly.classList.add("animate__slideOutLeft");
-                        }, 1000);
+                            const endScene = document.getElementById("end-scene");
+                            const whistle = document.getElementById("whistle");
+                            const text = document.getElementById("text");
 
-                        // Remove the train from the screen after the animation
-                        setTimeout(() => {
-                            trolly.remove();
+                            // Show text and whistle with animations
+                            text.style.display = "block";
+                            whistle.style.display = "block";
+                            text.classList.add("animate__fadeInDown");
+                            whistle.classList.add("animate__fadeInDown");
+
+                            // Add click event to whistle
+                            whistle.addEventListener("click", () => {
+                                whistle.classList.add("animate__rubberBand");
+
+                                // Animate text and trolley leaving the screen
+                                setTimeout(() => {
+                                    text.classList.add("animate__slideOutUp");
+                                    trolley.classList.add("animate__slideOutUp");
+                                    whistle.classList.add("animate__slideOutUp");
+
+                                    // Cleanup after animation
+                                    setTimeout(() => {
+                                        text.style.display = "none";
+                                        trolley.remove();
+                                        whistle.style.display = "none";
+                                    }, 1000);
+                                }, 1000);
+                            });
                         }, 3000);
-                    } catch (error) {
-                        console.error("Error triggering train event:", error);
-                        alert("Failed to trigger train event. Please try again.");
-                    }
-                });
+                    }, 3000); // Pause after trolley arrives
+                } catch (error) {
+                    console.error("Error triggering train event:", error);
+                    alert("Failed to trigger train event. Please try again.");
+                }
             });
         }
     } catch (error) {
         console.error("Error checking train event conditions:", error);
     }
 }
+
 
 // // Call the function when the page loads
 // (async function init() {
