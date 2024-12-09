@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heaven Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            background-size: cover;
+            background-position: center;
+        }
+        /* Background styles for different states */
+        .bg-heaven {
+            background-image: url('heaven.jpg');
+        }
+        .bg-homestead {
+            background-image: url('homestead.jpg');
+        }
+        .bg-littletown {
+            background-image: url('littletown.jpg');
+        }
+        .bg-dantesinferno {
+            background-image: url('dantesinferno.jpg');
+        }
+        .animal {
+            width: 100px;
+            height: auto;
+            margin: 10px;
+            position: relative;
+        }
+        .options {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            text-align: center;
+        }
+        .option {
+            margin: 5px;
+            cursor: pointer;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: Arial;
+        }
+
+        
+        #memorial-sign {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            cursor: pointer;
+            width: 60px;
+        }
+        #train-ticket {
+            position: absolute;
+            bottom: 20px;
+            left: 100px;
+            display: none;
+            cursor: pointer;
+            width: 60px;
+        }
+        #end-scene {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        #whistle, #trolley, #end-trolley, #text {
+            display: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Dynamic container for backgrounds -->
+    <div id="container" class="bg-heaven">
+        <!-- Animals will be dynamically added here -->
+    </div>
+
+    <!-- Memorial sign to navigate back to the memorial page -->
+    <a href="index.html">
+    <img id="memorial-sign" src="memorialsign.png" alt="Memorial Sign"></a>
+
+    <!-- Train ticket button -->
+    <img id="train-ticket" class="animate__animated" src="trainticket.png" alt="Train Ticket">
+
+    <img id="train-ticket" src="trainticket.png" class="animate__animated" alt="Train Ticket" style="display: none; position: absolute; bottom: 20px; left: 100px; width: 60px;">
+
+
+    <!-- End scene container -->
+    <div id="end-scene">
+        <img id="whistle" class="animate__animated" src="whistle.png" alt="Whistle">
+        <img id="trolley" class="animate__animated" src="trolly.png" alt="Trolley">
+        <img id="end-trolley" class="animate__animated" src="endtrolly.png" alt="End Trolley">
+        <img id="text" class="animate__animated" src="text.png" alt="Text">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+    <script src="abi.js"></script>
+    <script src="heaven.js"></script>
+</body>
+</html>
