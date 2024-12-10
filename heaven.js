@@ -1,8 +1,10 @@
 const provider = new ethers.BrowserProvider(window.ethereum);
 let signer, contract;
 
-const contractAddress = "0x9F53Db178e5714b63Fbf8656722725072fAB6F28";
-// Add the contract ABI here
+// const contractAddress = "0x9F53Db178e5714b63Fbf8656722725072fAB6F28";
+
+const contractAddress = "0x4f71f040852a5856D6d593FE2716C2530588a03f"
+
 const container = document.getElementById("container");
 
 const animals = [
@@ -117,7 +119,7 @@ function renderAnimal(name, trainDeparted) {
     animal.classList.add("animate__animated")
 
     // PUBLISH: set trainDeparted == false
-    if(trainDeparted == true) {
+    if(trainDeparted == false) {
         setTimeout(function(){
             animalContainer.style.opacity = "1"
 

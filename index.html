@@ -27,8 +27,8 @@
 
         #mailbox {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
+            bottom: 1px;
+            left: 250px;
             width: 300px;
             cursor: pointer;
         }
@@ -37,9 +37,9 @@
             display: none;
             position: absolute;
             bottom: 20px;
-            left: 50%;
+            left: 45%;
             transform: translateX(-50%);
-            width: 250px;
+            width: 200px;
             cursor: pointer;
         }
 
@@ -79,12 +79,14 @@
         <img id="heaven-sign" src="heavensign.png" alt="Heaven Sign" class="animate__animated animate__fadeInDown">
         <img id="sparkle-mailbox" src="sparkle.png" alt="Sparkle" class="sparkle animate__animated">
         <img id="sparkle-heaven" src="sparkle.png" alt="Sparkle" class="sparkle animate__animated">
-        <img id="oliver" src="oliverwalk.png" alt="Oliver" class="animate__animated oliverWalkIn">
+        <img id="oliver" src="oliverwalk.png" alt="Oliver" class="animate__animated">
     </div>
 
     <script src="abi.js"></script>
     <script>
-        const contractAddress = "0x9F53Db178e5714b63Fbf8656722725072fAB6F28";
+        // const contractAddress = "0x9F53Db178e5714b63Fbf8656722725072fAB6F28";
+
+        const contractAddress = "0x4f71f040852a5856D6d593FE2716C2530588a03f"
         let provider;
         let signer;
         let contract;
@@ -98,6 +100,7 @@
                 contract = new ethers.Contract(contractAddress, abi, signer);
                 console.log("Ethers initialized.");
                 handleOliverAnimation();
+                checkHeavenSign();
             } else {
                 alert("Please install a Web3 wallet like MetaMask to use this feature.");
             }
@@ -126,9 +129,10 @@
         }
 
         // Check if Heaven sign should be displayed on load
-        function checkHeavenSign() {
-            const hasPaidRespects = localStorage.getItem("hasPaidRespects");
-            if (hasPaidRespects === "true") {
+        async function checkHeavenSign() {
+            const numRespects = await contract.getTotalRespectsPaid()
+            console.log(numRespects)
+            if (numRespects > 0) {
                 showHeavenSign();
             }
         }
@@ -189,7 +193,9 @@ async function handleOliverAnimation() {
         console.log(trainDeparted)
 
         if (trainDeparted) {
+
             const oliver = document.getElementById("oliver");
+            oliver.classList.add("oliverWalkIn")
             oliver.style.display = "block";
             //oliver.classList.add("animate__slideInRight");
 
@@ -216,8 +222,9 @@ async function handleOliverAnimation() {
 
         // Check Heaven sign and handle Oliver animation on load
         window.onload = () => {
-            checkHeavenSign();
+            
             initializeEthers();
+            
         };
     </script>
 </body>
