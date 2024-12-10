@@ -61,7 +61,7 @@ async function updateBackground() {
             Rosie.style.right = "200px"
         }
         if (totalRespectsPaid >= animals.length) {
-            backgroundClass = "bg-homestead";
+            backgroundClass = "bg-dantesinferno";
 
             Rosie.style.bottom = "100px"
             Rosie.style.right = "200px"
@@ -119,7 +119,8 @@ function renderAnimal(name, trainDeparted) {
     // PUBLISH: set trainDeparted == false
     if(trainDeparted == true) {
         setTimeout(function(){
-            animal.style.opacity = "1"
+            animalContainer.style.opacity = "1"
+
         }, 1500)
     }
     
@@ -151,13 +152,13 @@ function renderAnimal(name, trainDeparted) {
         btn.style.marginBottom = "5px";
 
         if(i == 0) {
-            btn.style.transform = "translate(0, -100%)"
+            btn.style.transform = "translate(35%, -100%)"
         }
         if(i == 1) {
-            btn.style.transform = "translate(-100%, 50%)"
+            btn.style.transform = "translate(-90%, -90%)"
         }
         if(i == 2) {
-            btn.style.transform = "translate(150%, 20%)"
+            btn.style.transform = "translate(180%, -100%)"
         }
         btn.addEventListener("click", () => animateAnimal(animal, action));
         options.appendChild(btn);
@@ -229,11 +230,12 @@ async function checkTrainEvent() {
 
         // PUBLISH: SWAP THE LINE BELOW BACK IN
         if (allAnimalsRespected && !trainDeparted) {
-            //if (allAnimalsRespected) {
-            // Show the train ticket
+            if (allAnimalsRespected) {
+            //Show the train ticket
             const trainTicket = document.getElementById("train-ticket");
             trainTicket.style.display = "block";
             trainTicket.classList.add("animate__slideInDown");
+            }
 
             // Add click event to train ticket
             trainTicket.addEventListener("click", async () => {
@@ -241,8 +243,8 @@ async function checkTrainEvent() {
                     // Trigger the train event in the contract
 
                     // PUBLISH: uncomment the two lines below
-                    //const tx = await contract.triggerTrainEvent();
-                    //await tx.wait(); // Wait for the transaction to be mined
+                    const tx = await contract.triggerTrainEvent();
+                    await tx.wait(); // Wait for the transaction to be mined
 
                     // Hide the ticket
                     trainTicket.style.display = "none";
