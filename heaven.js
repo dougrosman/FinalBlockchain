@@ -231,15 +231,16 @@ async function checkTrainEvent() {
 
         // Check if the train has already departed
         const trainDeparted = await contract.hasTrainDeparted();
+        console.log(trainDeparted)
 
         // PUBLISH: SWAP THE LINE BELOW BACK IN
         if (allAnimalsRespected && !trainDeparted) {
-            if (allAnimalsRespected) {
+            //if (allAnimalsRespected) {
             //Show the train ticket
             const trainTicket = document.getElementById("train-ticket");
             trainTicket.style.display = "block";
             trainTicket.classList.add("animate__slideInDown");
-            }
+            
 
             // Add click event to train ticket
             trainTicket.addEventListener("click", async () => {
