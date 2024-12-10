@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +9,12 @@
     <style>
         body {
             margin: 0;
-            overflow: hidden;
+            /* overflow: hidden; */
             display: grid;
             min-height: 100vh;
             place-items: center;
         }
+
         #container {
             position: relative;
             overflow: hidden;
@@ -26,47 +28,89 @@
             background-repeat: no-repeat;
             background-position: center;
         }
+
         /* Background styles for different states */
         .bg-loading {
             background-image: url('loading.jpg');
         }
+
         .bg-heaven {
             background-image: url('heaven.jpg');
         }
+
         .bg-homestead {
             background-image: url('homestead.jpg');
         }
+
         .bg-littletown {
             background-image: url('littletown.jpg');
         }
+
         .bg-dantesinferno {
             background-image: url('dantesinferno.jpg');
         }
 
         .animal-container {
-            
+            position: absolute;
         }
+
         .animal {
             width: 100px;
             height: auto;
             margin: 10px;
             position: absolute;
+            opacity: 0;
         }
 
-        .Butters {
-            bottom: 200px;;
+        #Butters {
+            bottom: 200px;
+            right: 45%;
+        }
+
+        #Nipple {
+            bottom: 200px;
+            right: 60%;
+        }
+
+        #Barry {
+            bottom: 200px;
+            right: 53%;
+        }
+
+        #Rosie {
+            bottom: 310px;
             right: 50%;
+        }
+
+        #Zorro {
+            bottom: 280px;
+            right: 60%;
+        }
+
+        #Lucy {
+            bottom: 310px;
+            right: 55%;
+        }
+
+        #Cutie {
+            bottom: 300px;
+            right: 45%;
+        }
+
+        #Petal {
+            bottom: 250px;
+            right: 40%;
         }
 
 
         .options {
             position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
+            /* transform: translateX(-50%); */
+            /* z-index: 100; */
             display: none;
             text-align: center;
         }
+
         .option {
             margin: 5px;
             cursor: pointer;
@@ -75,9 +119,10 @@
             padding: 5px 10px;
             border-radius: 5px;
             font-family: Arial;
+            /* z-index: 200; */
         }
 
-        
+
         #memorial-sign {
             position: absolute;
             bottom: 1px;
@@ -85,6 +130,7 @@
             cursor: pointer;
             width: 80px;
         }
+
         #train-ticket {
             position: absolute;
             bottom: 20px;
@@ -93,6 +139,7 @@
             cursor: pointer;
             width: 60px;
         }
+
         #end-scene {
             display: none;
             position: absolute;
@@ -101,22 +148,51 @@
             transform: translate(-50%, -50%);
             text-align: center;
         }
-        #whistle, #end-trolley, #text {
+
+        #whistle {
             display: none;
             cursor: pointer;
+            width: 100px;
+            position: absolute;
+            bottom: 20px;
+            left: 100px;
         }
 
+       
+        #text {
+            display: none;
+            cursor: pointer;
+            width: 300px;
+            height: 300px;
+            object-fit: contain;
+            position: absolute;
+            bottom: 200px;
+            right: 45%;
+        }
+
+
         .slideInRight {
-            animation: slideRight 3s ease-in-out forwards;
+            animation: slideRight .3s ease-in-out forwards;
+        }
+
+        .slideUpFadeOut {
+            animation: slideUpFadeOut 1s ease-in forwards;
         }
 
         .animalToTrolley {
-            animation: moveToTrolley .5s linear forwards;
+            animation: moveToTrolley .1s linear forwards;
         }
 
         @keyframes slideRight {
             to {
                 right: 50%;
+            }
+        }
+
+        @keyframes slideUpFadeOut {
+            to {
+                bottom: 120%;
+                opacity: 0;
             }
         }
 
@@ -126,10 +202,9 @@
                 bottom: 10px;
             }
         }
-
-        
     </style>
 </head>
+
 <body>
     <!-- Dynamic container for backgrounds -->
     <div id="container" class="bg-loading">
@@ -138,26 +213,27 @@
 
         <!-- Train ticket button -->
         <img id="train-ticket" class="animate__animated" src="trainticket.png" alt="Train Ticket">
-         <!-- End scene container -->
-    <div id="end-scene">
+        <!-- End scene container -->
+        <!-- <div id="end-scene"> -->
         <img id="whistle" class="animate__animated" src="whistle.png" alt="Whistle">
-        <img id="trolley" class="animate__animated" src="trolly.png" alt="Trolley">
-        <img id="end-trolley" class="animate__animated" src="endtrolly.png" alt="End Trolley">
+        <!-- <img id="trolley" class="animate__animated" src="trolly.png" alt="Trolley"> -->
+        <!-- <img id="end-trolley" class="animate__animated" src="endtrolly.png" alt="End Trolley"> -->
         <img id="text" class="animate__animated" src="text.png" alt="Text">
-    </div>
+        <!-- </div> -->
     </div>
 
     <!-- Memorial sign to navigate back to the memorial page -->
-    
-    
+
+
 
     <!-- <img id="train-ticket" src="trainticket.png" class="animate__animated" alt="Train Ticket" style="display: none; position: absolute; bottom: 20px; left: 100px; width: 60px;"> -->
 
 
-   
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
     <script src="abi.js"></script>
     <script src="heaven.js"></script>
 </body>
+
 </html>

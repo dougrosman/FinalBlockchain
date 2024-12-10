@@ -26,14 +26,17 @@ const animals = [
 })();
 
 async function loadPage() {
-    await updateBackground(); // Update the background based on respects paid
+    
     const respectsPaidData = await fetchRespectsData(); // Fetch respects data
+    const trainDeparted = await contract.hasTrainDeparted();
 
     respectsPaidData.animals.forEach((animal) => {
         if (animal.respects > 0) {
-            renderAnimal(animal.name); // Render only animals with respects paid
+            renderAnimal(animal.name, trainDeparted); // Render only animals with respects paid
         }
     });
+
+    await updateBackground(); // Update the background based on respects paid
 }
 
 // Update the background image based on the number of respects paid
@@ -44,9 +47,25 @@ async function updateBackground() {
 
         // Determine the background class based on respects paid
         let backgroundClass = "bg-heaven"; // Default background
-        if (totalRespectsPaid >= 2) backgroundClass = "bg-homestead";
-        if (totalRespectsPaid >= 4) backgroundClass = "bg-littletown";
-        if (totalRespectsPaid >= animals.length) backgroundClass = "bg-dantesinferno";
+        if (totalRespectsPaid >= 2) {
+            backgroundClass = "bg-homestead";
+
+            Rosie.style.bottom = "100px"
+            Rosie.style.right = "200px"
+
+        } 
+        if (totalRespectsPaid >= 4) {
+            backgroundClass = "bg-littletown";
+
+            Rosie.style.bottom = "100px"
+            Rosie.style.right = "200px"
+        }
+        if (totalRespectsPaid >= animals.length) {
+            backgroundClass = "bg-homestead";
+
+            Rosie.style.bottom = "100px"
+            Rosie.style.right = "200px"
+        }
 
         // Update the container's class
         container.className = ""; // Clear previous classes
@@ -83,54 +102,85 @@ async function fetchRespectsData() {
 
 
 // Render Animal
-function renderAnimal(name) {
+function renderAnimal(name, trainDeparted) {
     // Create a container for the animal and its options
     const animalContainer = document.createElement("div");
     animalContainer.classList.add("animal-container");
-    //animalContainer.style.position = "absolute";
-    //animalContainer.style.display = "inline-block";
     animalContainer.style.margin = "10px";
+    animalContainer.id = (`${name}`)
 
     // Create the animal image
     const animal = document.createElement("img");
     animal.src = `${name}.png`;
     animal.classList.add("animal");
-    animal.classList.add(`${name}`)
+   
     animal.classList.add("animate__animated")
+
+    // PUBLISH: set trainDeparted == false
+    if(trainDeparted == true) {
+        setTimeout(function(){
+            animal.style.opacity = "1"
+        }, 1500)
+    }
+    
 
     // Options container
     const options = document.createElement("div");
     options.classList.add("options");
     options.style.position = "absolute";
-    options.style.top = "-180px";
-    options.style.left = "50%";
-    options.style.transform = "translateX(-50%)";
-    options.style.display = "none"; // Initially hidden
-    options.style.background = "#fff";
-    options.style.border = "1px solid #ccc";
+    options.style.top = "0";
+    options.style.left = "0";
+    //options.style.transform = "translateX(-80%)";
+    //options.style.display = "none"; // Initially hidden
+    //options.style.background = "#fff";
+    //options.style.border = "1px solid #ccc";
     options.style.padding = "1px";
     options.style.borderRadius = "5px";
     options.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
 
     // Add action buttons to the options menu
-    ["pet", "play", "feel the love"].forEach((action) => {
+    let interactionOptions = ["pet", "play", "feel the love"]
+    for (let i = 0; i < interactionOptions.length; i++) {
+
+
+        let action = interactionOptions[i]
         const btn = document.createElement("div");
         btn.classList.add("option");
         btn.textContent = action;
         btn.style.cursor = "pointer";
         btn.style.marginBottom = "5px";
+
+        if(i == 0) {
+            btn.style.transform = "translate(0, -100%)"
+        }
+        if(i == 1) {
+            btn.style.transform = "translate(-100%, 50%)"
+        }
+        if(i == 2) {
+            btn.style.transform = "translate(150%, 20%)"
+        }
         btn.addEventListener("click", () => animateAnimal(animal, action));
         options.appendChild(btn);
-    });
+    }
+    
 
     // Show the options menu on hover over the container
     animalContainer.addEventListener("mouseover", () => {
         options.style.display = "block";
+        console.log("hovered over")
+        document.querySelectorAll('.animal-container').forEach(a => {
+            a.style.zIndex = 10;
+        })
+        animalContainer.style.zIndex = 999;
     });
 
     // Keep the options menu visible when hovering over it
     options.addEventListener("mouseover", () => {
         options.style.display = "block";
+        document.querySelectorAll('.animal-container').forEach(a => {
+            a.style.zIndex = 10;
+        })
+        animalContainer.style.zIndex = 999;
     });
 
     // Hide the options menu when the mouse leaves both the container and the menu
@@ -177,8 +227,9 @@ async function checkTrainEvent() {
         // Check if the train has already departed
         const trainDeparted = await contract.hasTrainDeparted();
 
-        //if (allAnimalsRespected && !trainDeparted) {
-            if (allAnimalsRespected) {
+        // PUBLISH: SWAP THE LINE BELOW BACK IN
+        if (allAnimalsRespected && !trainDeparted) {
+            //if (allAnimalsRespected) {
             // Show the train ticket
             const trainTicket = document.getElementById("train-ticket");
             trainTicket.style.display = "block";
@@ -188,8 +239,10 @@ async function checkTrainEvent() {
             trainTicket.addEventListener("click", async () => {
                 try {
                     // Trigger the train event in the contract
-                    // const tx = await contract.triggerTrainEvent();
-                    // await tx.wait(); // Wait for the transaction to be mined
+
+                    // PUBLISH: uncomment the two lines below
+                    //const tx = await contract.triggerTrainEvent();
+                    //await tx.wait(); // Wait for the transaction to be mined
 
                     // Hide the ticket
                     trainTicket.style.display = "none";
@@ -206,6 +259,7 @@ async function checkTrainEvent() {
                     trolley.style.backgroundSize = "contain";
                     trolley.style.backgroundRepeat = "no-repeat";
                     trolley.classList.add("slideInRight");
+                    trolley.classList.add("animate__animated");
                     document.getElementById("container").appendChild(trolley);
 
                     // Wait for the trolly to arrive
@@ -241,20 +295,24 @@ async function checkTrainEvent() {
 
                                 // Animate text and trolley leaving the screen
                                 setTimeout(() => {
-                                    text.classList.add("animate__slideOutUp");
-                                    trolley.classList.add("animate__slideOutUp");
-                                    whistle.classList.add("animate__slideOutUp");
+                                    text.classList.add("animate__fadeOutUp");
+                                    trolley.style.right = "50%"
+                                    trolley.style.bottom = "10px"
+                                    trolley.classList.remove("slideInRight");
+                                    whistle.classList.add("animate__fadeOutUp");
+                                    trolley.classList.add("slideUpFadeOut");
 
                                     // Cleanup after animation
                                     setTimeout(() => {
                                         text.style.display = "none";
-                                        trolley.remove();
+                                        //trolley.remove();
+                                        
                                         whistle.style.display = "none";
                                     }, 1000);
-                                }, 1000);
+                                }, 100);
                             });
-                        }, 3000);
-                    }, 3000); // Pause after trolley arrives
+                        }, 300);
+                    }, 300); // Pause after trolley arrives
                 } catch (error) {
                     console.error("Error triggering train event:", error);
                     alert("Failed to trigger train event. Please try again.");

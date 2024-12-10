@@ -12,16 +12,24 @@
             margin: 0;
             padding: 0;
             font-family: "Big Caslon", serif;
-            background: url('memorialgrounds.jpg') no-repeat center center fixed;
-            background-size: cover;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+        }
+
+        #container {
+            width: 1400px;
+            height: 1024px;
+            background: url('memorialgrounds.jpg') no-repeat;
             overflow: hidden;
+            position: relative;
         }
 
         #mailbox {
-            position: fixed;
+            position: absolute;
             bottom: 10px;
             left: 10px;
-            width: 100px;
+            width: 300px;
             cursor: pointer;
         }
 
@@ -31,7 +39,7 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 150px;
+            width: 250px;
             cursor: pointer;
         }
 
@@ -46,19 +54,33 @@
         #oliver {
             position: absolute;
             bottom: 10px;
-            right: -150px;
+            right: -250px;
             width: 150px;
-            display: none;
+            transform: translateX(-50%)
+            /* display: none; */
+        }
+
+        .oliverWalkIn {
+            animation: oliverWalkIn 3s 2s linear forwards;
+        }
+
+        @keyframes oliverWalkIn {
+            to{
+                right: 50%;
+            }
+            
         }
     </style>
 </head>
 
 <body>
-    <img id="mailbox" src="mailbox.png" alt="Mailbox">
-    <img id="heaven-sign" src="heavensign.png" alt="Heaven Sign" class="animate__animated animate__fadeInDown">
-    <img id="sparkle-mailbox" src="sparkle.png" alt="Sparkle" class="sparkle animate__animated">
-    <img id="sparkle-heaven" src="sparkle.png" alt="Sparkle" class="sparkle animate__animated">
-    <img id="oliver" src="oliverwalk.png" alt="Oliver" class="animate__animated">
+    <div id="container">
+        <img id="mailbox" src="mailbox.png" alt="Mailbox">
+        <img id="heaven-sign" src="heavensign.png" alt="Heaven Sign" class="animate__animated animate__fadeInDown">
+        <img id="sparkle-mailbox" src="sparkle.png" alt="Sparkle" class="sparkle animate__animated">
+        <img id="sparkle-heaven" src="sparkle.png" alt="Sparkle" class="sparkle animate__animated">
+        <img id="oliver" src="oliverwalk.png" alt="Oliver" class="animate__animated oliverWalkIn">
+    </div>
 
     <script src="abi.js"></script>
     <script>
@@ -155,7 +177,7 @@ async function payRespects() {
 
         // Go to Heaven page
         function goToHeaven() {
-            // localStorage.setItem("returnFromHeaven", "true"); // Set a flag to trigger Oliver animation on return
+            
             window.location.href = "heaven.html"; // Redirect to the Heaven page
         }
 
@@ -169,15 +191,15 @@ async function handleOliverAnimation() {
         if (trainDeparted) {
             const oliver = document.getElementById("oliver");
             oliver.style.display = "block";
-            oliver.classList.add("animate__slideInRight");
+            //oliver.classList.add("animate__slideInRight");
 
             setTimeout(() => {
                 // Move Oliver to the center and change to sitting position
-                oliver.style.right = "50%";
-                oliver.style.transform = "translateX(50%)";
+                // oliver.style.right = "50%";
+                // oliver.style.transform = "translateX(50%)";
                 oliver.src = "oliversit.png"; // Change to sitting Oliver
-                oliver.classList.remove("animate__slideInRight");
-            }, 3000);
+                // oliver.classList.remove("animate__slideInRight");
+            }, 5000);
         }
     } catch (error) {
         console.error("Error checking train departure status:", error);
@@ -196,7 +218,6 @@ async function handleOliverAnimation() {
         window.onload = () => {
             checkHeavenSign();
             initializeEthers();
-            // handleOliverAnimation();
         };
     </script>
 </body>
