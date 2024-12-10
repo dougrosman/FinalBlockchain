@@ -52,21 +52,21 @@ async function updateBackground() {
         if (totalRespectsPaid >= 2) {
             backgroundClass = "bg-homestead";
 
-            Rosie.style.bottom = "100px"
-            Rosie.style.right = "200px"
+            // Rosie.style.bottom = "100px"
+            // Rosie.style.right = "200px"
 
         } 
         if (totalRespectsPaid >= 4) {
             backgroundClass = "bg-littletown";
 
-            Rosie.style.bottom = "100px"
-            Rosie.style.right = "200px"
+            // Rosie.style.bottom = "100px"
+            // Rosie.style.right = "200px"
         }
         if (totalRespectsPaid >= animals.length) {
             backgroundClass = "bg-dantesinferno";
 
-            Rosie.style.bottom = "100px"
-            Rosie.style.right = "200px"
+            // Rosie.style.bottom = "100px"
+            // Rosie.style.right = "200px"
         }
 
         // Update the container's class
@@ -110,6 +110,7 @@ function renderAnimal(name, trainDeparted) {
     animalContainer.classList.add("animal-container");
     animalContainer.style.margin = "10px";
     animalContainer.id = (`${name}`)
+    console.log(name)
 
     // Create the animal image
     const animal = document.createElement("img");
