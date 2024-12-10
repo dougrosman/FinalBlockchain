@@ -113,7 +113,8 @@ function renderAnimal(name, trainDeparted) {
 
     // Create the animal image
     const animal = document.createElement("img");
-    animal.src = `${name}.png`;
+    // console.log(name)
+    animal.src = `${name.toLowerCase()}.png`;
     animal.classList.add("animal");
    
     animal.classList.add("animate__animated")
