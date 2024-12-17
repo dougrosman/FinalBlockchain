@@ -149,6 +149,7 @@ body {
     position: absolute;
     bottom: 20px;
     left: 100px;
+    animation-delay: 1s;
 }
 
 
@@ -176,6 +177,7 @@ body {
     animation: moveToTrolley .1s linear forwards;
 }
 
+
 @keyframes slideRight {
     to {
         right: 50%;
@@ -191,7 +193,7 @@ body {
 
 @keyframes moveToTrolley {
     to {
-        right: 50%;
-        bottom: 10px;
+        right: 60%;
+        bottom: 150px;
     }
 }

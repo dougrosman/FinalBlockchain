@@ -273,7 +273,7 @@ async function checkTrainEvent() {
                     setTimeout(async () => {
                         // Animate animals to the trolly one by one
                         for (const animal of animals) {
-                            const animalDiv = document.querySelector(`.${animal}`);
+                            const animalDiv = document.querySelector(`#${animal}`);
                             if (animalDiv) {
                                 animalDiv.classList.add("animalToTrolley");
                                 await new Promise((resolve) => setTimeout(resolve, 250)); // Wait for animation
@@ -306,7 +306,8 @@ async function checkTrainEvent() {
                                     trolley.style.right = "50%"
                                     trolley.style.bottom = "10px"
                                     trolley.classList.remove("slideInRight");
-                                    whistle.classList.add("animate__fadeOutUp");
+                                    whistle.style.animationDelay = "0s"
+                                    whistle.classList.add("animate__fadeOut");
                                     trolley.classList.add("slideUpFadeOut");
 
                                     // Cleanup after animation
