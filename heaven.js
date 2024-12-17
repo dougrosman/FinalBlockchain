@@ -121,11 +121,11 @@ function renderAnimal(name, trainDeparted) {
     animal.classList.add("animate__animated")
 
     // PUBLISH: set trainDeparted == false
-    if(trainDeparted == false) {
+    if(trainDeparted == true) {
         setTimeout(function(){
             animalContainer.style.opacity = "1"
 
-        }, 1500)
+        }, 100)
     }
     
 
@@ -234,7 +234,7 @@ async function checkTrainEvent() {
         console.log(trainDeparted)
 
         // PUBLISH: SWAP THE LINE BELOW BACK IN
-        if (allAnimalsRespected && !trainDeparted) {
+        if (allAnimalsRespected && trainDeparted) {
             //if (allAnimalsRespected) {
             //Show the train ticket
             const trainTicket = document.getElementById("train-ticket");
@@ -248,8 +248,8 @@ async function checkTrainEvent() {
                     // Trigger the train event in the contract
 
                     // PUBLISH: uncomment the two lines below
-                    const tx = await contract.triggerTrainEvent();
-                    await tx.wait(); // Wait for the transaction to be mined
+                    //const tx = await contract.triggerTrainEvent();
+                    //await tx.wait(); // Wait for the transaction to be mined
 
                     // Hide the ticket
                     trainTicket.style.display = "none";
