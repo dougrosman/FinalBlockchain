@@ -149,32 +149,33 @@ body {
     position: absolute;
     bottom: 20px;
     left: 100px;
-    animation-delay: 1s;
+    animation-delay: 2s;
 }
 
 
 #text {
     display: none;
     cursor: pointer;
-    width: 300px;
-    height: 300px;
+    width: 500px;
+    height: 500px;
     object-fit: contain;
     position: absolute;
-    bottom: 200px;
-    right: 45%;
+    bottom: 150px;
+    right: 37%;
+    animation-duration: 2s;
 }
 
 
 .slideInRight {
-    animation: slideRight .3s ease-in-out forwards;
+    animation: slideRight 6s ease-in-out forwards;
 }
 
 .slideUpFadeOut {
-    animation: slideUpFadeOut 1s ease-in forwards;
+    animation: slideUpFadeOut 2s ease-in forwards;
 }
 
 .animalToTrolley {
-    animation: moveToTrolley .1s linear forwards;
+    animation: moveToTrolley 1.5s linear forwards;
 }
 
 

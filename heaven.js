@@ -269,14 +269,20 @@ async function checkTrainEvent() {
                     trolley.classList.add("animate__animated");
                     document.getElementById("container").appendChild(trolley);
 
+                    for (const animal of animals) {
+                        const animalDiv = document.querySelector(`#${animal}`);
+                        animalDiv.style.zIndex = 0;
+                    }
+
                     // Wait for the trolly to arrive
                     setTimeout(async () => {
                         // Animate animals to the trolly one by one
                         for (const animal of animals) {
                             const animalDiv = document.querySelector(`#${animal}`);
+                            animalDiv.style.zIndex = 0;
                             if (animalDiv) {
                                 animalDiv.classList.add("animalToTrolley");
-                                await new Promise((resolve) => setTimeout(resolve, 250)); // Wait for animation
+                                await new Promise((resolve) => setTimeout(resolve, 1500)); // Wait for animation
                                 animalDiv.remove();
                             }
                         }
@@ -316,11 +322,11 @@ async function checkTrainEvent() {
                                         //trolley.remove();
                                         
                                         whistle.style.display = "none";
-                                    }, 1000);
+                                    }, 3000);
                                 }, 100);
                             });
-                        }, 300);
-                    }, 300); // Pause after trolley arrives
+                        }, 500);
+                    }, 6000); // Pause after trolley arrives
                 } catch (error) {
                     console.error("Error triggering train event:", error);
                     alert("Failed to trigger train event. Please try again.");
